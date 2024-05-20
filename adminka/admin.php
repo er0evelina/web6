@@ -5,7 +5,7 @@ $stmt -> execute([1]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW']) ||
-    $_SERVER['PHP_AUTH_USER'] != 'login' ||
+    $_SERVER['PHP_AUTH_USER'] != 'admin' ||
     $_SERVER['PHP_AUTH_PW'] != 'pass') {
   header('HTTP/1.1 401 Unanthorized');
   header('WWW-Authenticate: Basic realm="My site"');
@@ -155,12 +155,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit'])) {
     $stmt = $db->prepare("SELECT * FROM application WHERE id = ?");
     $stmt -> execute([$user_id]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $values['name'] = strip_tags($row['name']);
-    $values['phone'] = strip_tags($row['phone']);
+    $values['name'] = strip_tags($row['names']);
+    $values['phone'] = strip_tags($row['phones']);
     $values['email'] = strip_tags($row['email']);
-    $values['year'] = $row['year'];
+    $values['year'] = $row['dates'];
     $values['gender'] = $row['gender'];
-    $values['bio'] = strip_tags($row['bio']);
+    $values['bio'] = strip_tags($row['biography']);
     $values['checkbox'] = true; 
 
     $stmt = $db->prepare("SELECT * FROM languages WHERE id = ?");

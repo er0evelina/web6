@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $errors['names'] = !empty($_COOKIE['name_error']);
     $errors['phone'] = !empty($_COOKIE['phone_error']);
     $errors['email'] = !empty($_COOKIE['email_error']);
-    $errors['data'] = !empty($_COOKIE['data_error']);
+    $errors['dates'] = !empty($_COOKIE['data_error']);
     $errors['gender'] = !empty($_COOKIE['gender_error']);
     $errors['agree'] = !empty($_COOKIE['agree_error']);
 
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('email_error', '', 100000);
         $messages[] = '<div>Некорректный email.</div>';
     }
-    if ($errors['data']) {
+    if ($errors['dates']) {
         setcookie('data_error', '', 100000);
         $messages[] = '<div>Выберите год рождения.</div>';
     }
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 $values['names'] = isset($_COOKIE['names_value']) ? strip_tags($_COOKIE['names_value']) : '';
 $values['phone'] = isset($_COOKIE['phone_value']) ? strip_tags($_COOKIE['phone_value']) : '';
 $values['email'] = isset($_COOKIE['email_value']) ? strip_tags($_COOKIE['email_value']) : '';
-$values['data'] = isset($_COOKIE['data_value']) ? $_COOKIE['data_value'] : '';
+$values['dates'] = isset($_COOKIE['data_value']) ? $_COOKIE['data_value'] : '';
 $values['gender'] = isset($_COOKIE['gender_value']) ? $_COOKIE['gender_value'] : '';
 $values['biography'] = isset($_COOKIE['biography_value']) ? strip_tags($_COOKIE['biography_value']) : '';
 $values['agree'] = isset($_COOKIE['agree_value']) ? $_COOKIE['agree_value'] : ''; 
@@ -106,7 +106,7 @@ if (empty($_COOKIE['language_value'])) {
         $values['names'] = strip_tags($row['names']);
         $values['phone'] = isset($_COOKIE['phone']) ? strip_tags($_COOKIE['phone']) : '';
         $values['email'] = strip_tags($row['email']);
-        $values['data'] = isset($_COOKIE['data']) ? $_COOKIE['data'] : '';
+        $values['dates'] = isset($_COOKIE['dates']) ? $_COOKIE['dates'] : '';
         $values['gender'] = $row['gender'];
         $values['biography'] = strip_tags($row['biography']);
         $values['agree'] = true; 
@@ -149,11 +149,11 @@ else {
     } else {
         setcookie('email_value', $_POST['email'], time() + 12 * 30 * 24 * 60 * 60);
     }
-    if (empty($_POST['data'])) {
+    if (empty($_POST['dates'])) {
         setcookie('data_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
-        setcookie('data_value', $_POST['data'], time() + 12 * 30 * 24 * 60 * 60);
+        setcookie('data_value', $_POST['dates'], time() + 12 * 30 * 24 * 60 * 60);
     }
     if (empty($_POST['gender'])) {
         setcookie('gender_error', '1', time() + 24 * 60 * 60);
@@ -201,8 +201,8 @@ else {
         // кроме логина и пароля.
         $db = new PDO('mysql:host=localhost;dbname=u67371', 'u67371', '3920651', array(PDO::ATTR_PERSISTENT => true));
         
-        $stmt = $db->prepare("UPDATE application SET names = ?, phones = ?, email = ?, data = ?, gender = ?, biography = ? WHERE id = ?");
-        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography'], $_SESSION['uid']]);
+        $stmt = $db->prepare("UPDATE application SET names = ?, phones = ?, email = ?, dates = ?, gender = ?, biography = ? WHERE id = ?");
+        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['dates'], $_POST['gender'], $_POST['biography'], $_SESSION['uid']]);
 
         $stmt = $db->prepare("DELETE FROM languages WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
@@ -230,7 +230,7 @@ else {
         $db = new PDO('mysql:host=localhost;dbname=u67371', 'u67371', '3920651', array(PDO::ATTR_PERSISTENT => true));
 
         $stmt = $db->prepare("INSERT INTO application SET names = ?, phones = ?, email = ?, dates = ?, gender = ?, biography = ?");
-        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography']]);
+        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['dates'], $_POST['gender'], $_POST['biography']]);
         
         $res = $db->query("SELECT max(id) FROM application");
         $row = $res->fetch();

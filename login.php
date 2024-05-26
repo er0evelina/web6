@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вход в систему</title>
-  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -80,6 +79,9 @@ else {
   // Делаем перенаправление.
   header('Location: ./');
 }
+
 ?>
+
 </body>
+
 </html>

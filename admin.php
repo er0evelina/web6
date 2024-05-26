@@ -6,11 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ-панель</title>
-    // <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php
 
+$db = new PDO('mysql:host=localhost;dbname=u67371', 'u67371', '3920651', array(PDO::ATTR_PERSISTENT => true));
+$stmt = $db->prepare("SELECT * FROM admin WHERE id = ?");
+$stmt -> execute([1]);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
 // Проверка HTTP-авторизации
 if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW']) ||

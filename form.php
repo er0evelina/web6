@@ -47,8 +47,8 @@
       E-mail:<br><input type="text" name="email" <?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>">
       <br>
       <div class="form-group">
-        <legend for="data"class="group" style="color: white;">Дата рождения:</legend>
-        <input type="date" id="data" size="3" name="data" <?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>">
+        <legend for="dates"class="group" style="color: white;">Дата рождения:</legend>
+        <input type="date" id="dates" size="3" name="dates" <?php if ($errors['dates']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['dates']; ?>">
       </div>
       <div <?php if ($errors['gender']) {print 'class="error"';} ?>>
         Пол:<br>
